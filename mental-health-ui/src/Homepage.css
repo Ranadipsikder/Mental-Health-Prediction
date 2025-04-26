@@ -1,0 +1,105 @@
+/* Global reset (only add this once in your app-wide CSS or index.css if needed) */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(-45deg, #cbdcf7, #b4e0fa, #81eeff, #f9f9f9);
+  background-size: 400% 400%;
+  animation: gradientBG 15s ease infinite;
+}
+
+@keyframes gradientBG {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.home-container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+}
+
+.home-box {
+  background: rgba(255, 255, 255, 0.87);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  padding: 3rem 2rem;
+  border-radius: 2rem;
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.1);
+  max-width: 650px;
+  width: 100%;
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.home-box:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 35px 60px rgba(0, 0, 0, 0.15);
+}
+
+.home-title {
+  font-size: 2rem;
+  color: #1e40af;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+}
+
+.home-subtitle {
+  font-size: 1.05rem;
+  color: #374151;
+  margin-bottom: 2rem;
+  line-height: 1.8;
+  font-weight: 500;
+}
+
+.start-button {
+  background: linear-gradient(145deg, #3b82f6, #1d4ed8);
+  color: white;
+  font-weight: 600;
+  padding: 0.85rem 2rem;
+  border-radius: 9999px;
+  font-size: 1rem;
+  border: none;
+  box-shadow: 0 6px 0 #1e3a8a, 0 10px 20px rgba(0, 0, 0, 0.2);
+  transition: all 0.25s ease-in-out;
+  cursor: pointer;
+}
+
+.start-button:hover {
+  background: linear-gradient(145deg, #2563eb, #1e40af);
+  transform: translateY(-3px);
+  box-shadow: 0 9px 0 #1e3a8a, 0 15px 25px rgba(0, 0, 0, 0.25);
+}
+
+.start-button:active {
+  transform: translateY(2px);
+  box-shadow: 0 3px 0 #1e3a8a, 0 8px 15px rgba(0, 0, 0, 0.15);
+}
+
+@media (max-width: 640px) {
+  .home-box {
+    padding: 2.5rem 1.5rem;
+  }
+
+  .home-title {
+    font-size: 1.75rem;
+  }
+
+  .home-subtitle {
+    font-size: 0.95rem;
+  }
+}

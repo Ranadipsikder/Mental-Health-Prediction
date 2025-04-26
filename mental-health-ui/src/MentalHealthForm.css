@@ -1,0 +1,98 @@
+/* MentalHealthForm.css */
+body {
+    margin: 0;
+    padding: 0;
+    background: #f9f9f9;
+    font-family: 'Segoe UI', sans-serif;
+  }
+  
+  .form-container {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 30px;
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
+  }
+  
+  .form-title {
+    font-size: 32px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 2rem;
+    color: #2c3e50;
+  }
+  
+  .form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px 30px;
+  }
+  
+  .form-group {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .form-group label {
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #34495e;
+    font-size: 14px;
+  }
+  
+  .form-group input,
+  .form-group select {
+    padding: 10px 12px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+    transition: border-color 0.2s;
+  }
+  
+  .form-group input:focus,
+  .form-group select:focus {
+    border-color: #007bff;
+    outline: none;
+  }
+  
+  button[type="submit"] {
+    grid-column: span 2;
+    padding: 12px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 20px;
+  }
+  
+  button[type="submit"]:hover {
+    background-color: #0056b3;
+  }
+  
+  .result-box {
+    margin-top: 2rem;
+    padding: 20px;
+    background-color: #f0f8ff;
+    border-left: 5px solid #007bff;
+    border-radius: 8px;
+    color: #2c3e50;
+    font-size: 18px;
+    text-align: center;
+  }
+  
+  /* Mobile responsive */
+  @media (max-width: 768px) {
+    .form-grid {
+      grid-template-columns: 1fr;
+    }
+  
+    button[type="submit"] {
+      grid-column: span 1;
+    }
+  }
+  
