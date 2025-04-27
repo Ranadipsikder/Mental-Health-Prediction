@@ -1,61 +1,50 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 import pickle
-import pandas as pd
+import numpy as np
 
-# Load the trained model
-with open('model.pkl', 'rb') as f:
-    model = pickle.load(f)
-
-# Create Flask app
+# Initialize Flask app
 app = Flask(__name__)
-CORS(app)  # Enables CORS for all routes
+CORS(app)  # Enable CORS for all routes
+
+# Load the saved model
+with open('model.pkl', 'rb') as file:
+    model = pickle.load(file)
+
+# Define features in the same order used during training
+features = ['Age', 'Gender', 'self_employed', 'family_history', 'work_interfere',
+            'remote_work', 'tech_company', 'benefits', 'care_options', 'wellness_program',
+            'seek_help', 'anonymity', 'leave', 'mental_health_consequence',
+            'phys_health_consequence', 'coworkers', 'supervisor',
+            'mental_health_interview', 'phys_health_interview', 'mental_vs_physical',
+            'obs_consequence']
+
+@app.route('/')
+def home():
+    return "Mental Health Prediction API is running. Use /predict endpoint."
 
 @app.route('/predict', methods=['POST'])
 def predict():
-    data = request.json
     try:
-        # Convert input JSON to a DataFrame
-        input_df = pd.DataFrame([data])
-        
-        # Predict using the loaded model
-        prediction = model.predict(input_df)[0]
-        
-        # Return the result
-        return jsonify({'treatment': prediction})
+        data = request.get_json(force=True)
+
+        # Validate all required fields are present
+        missing_fields = [field for field in features if field not in data]
+        if missing_fields:
+            return jsonify({'error': f'Missing fields: {missing_fields}'}), 400
+
+        # Extract input data in the correct order
+        input_data = [data[feature] for feature in features]
+        input_array = np.array(input_data).reshape(1, -1)
+
+        # Make prediction
+        prediction = model.predict(input_array)[0]
+
+        result = {'prediction': int(prediction)}
+        return jsonify(result)
+
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
-# Run the Flask app
-if __name__ == '__main__':
+if __name__ == "__main__":
     app.run(debug=True)
-
-@app.route('/predict', methods=['POST'])
-def predict():
-    data = request.json
-    try:
-        input_df = pd.DataFrame([data])
-
-        mappings = {
-            'Yes': 1,
-            'No': 0,
-            'Male': 0,
-            'Female': 1,
-            'Other': 2,
-            'Very easy': 0,
-            'Somewhat easy': 1,
-            "Don't know": 2,
-            'Somewhat difficult': 3,
-            'Very difficult': 4
-        }
-
-        for col in input_df.columns:
-            input_df[col] = input_df[col].map(mappings).fillna(input_df[col])
-
-        print("Processed input:\n", input_df)
-
-        prediction = model.predict(input_df)[0]
-        return jsonify({'treatment': "Yes" if prediction == 1 else "No"})
-    except Exception as e:
-        print("Error:", str(e))
-        return jsonify({'error': str(e)}), 500
